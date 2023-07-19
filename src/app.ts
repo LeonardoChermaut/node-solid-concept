@@ -1,9 +1,21 @@
 import express from 'express'
 import { router } from './routes'
 
-const app = express();
+export class App {
+    private app: express.Application;
+    
+    constructor() {
+        this.app = express();
+        this.app.use(express.json());
+        this.app.use(router);
+    }
+    
+    public getApp(): express.Application {
+        return this.app;
+    }
+}
 
-app.use(express.json());
-app.use(router);
+new App().getApp();
 
-export { app }
+
+
