@@ -1,21 +1,23 @@
-import express from 'express'
-import { router } from './routes'
+import express from "express";
+import { UserRoutes } from "./routes";
 
 export class App {
-    private app: express.Application;
-    
-    constructor() {
-        this.app = express();
-        this.app.use(express.json());
-        this.app.use(router);
-    }
-    
-    public getApp(): express.Application {
-        return this.app;
-    }
+  private app: express.Application;
+  private routes: UserRoutes;
+
+  constructor() {
+    this.app = express();
+    this.app.use(express.json());
+
+    const routers = express.Router();
+    this.routes = new UserRoutes(routers);
+    this.app.use(routers);
+  }
+
+  public init(): express.Application {
+    return this.app;
+  }
 }
 
-new App().getApp();
-
-
-
+const app = new App();
+app.init();

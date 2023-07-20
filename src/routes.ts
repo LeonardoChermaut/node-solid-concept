@@ -1,10 +1,31 @@
 import { Router } from "express";
 import { createUserController } from "./use-case/create-user";
 
-const router = Router()
+export class UserRoutes {
+  private router: Router;
+  private path = "/api/v1/users";
+  private createUserController = createUserController;
 
-router.post('/api/v1/users', (request, response) => {
-  return createUserController.handle(request, response);
-});
+  constructor(router: Router) {
+    this.router = router;
+    this.configureRoutes();
+  }
 
-export { router }
+  private configureRoutes() {
+    this.router.post(this.path, (request, response) => {
+      return this.createUserController.handle(request, response);
+    });
+
+    this.router.get(this.path, (request, response) => {
+      return this.createUserController.handle(request, response);
+    });
+
+    this.router.put(this.path, (request, response) => {
+      return this.createUserController.handle(request, response);
+    });
+
+    this.router.delete(this.path, (request, response) => {
+      return this.createUserController.handle(request, response);
+    });
+  }
+}
